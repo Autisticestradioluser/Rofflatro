@@ -38,7 +38,20 @@ local joker_list = {
     'Speculative Oops',
 }
 
--- load all individual jokers
+-- load all individual jokers and check if they exist to prevent a nil value error
+function file_exists(file_path)
+    local file = io.open(file_path, "r")  -- Try to open the file in read mode
+    if file then
+        file:close()  -- Close the file if it exists
+        return true
+    else
+        return false  -- Return false if the file does not exist
+    end
+end
+
 for _, key in ipairs(joker_list) do
-    SMODS.load_file('cards/jokers/'..key..'.lua')()
+    local file_path = 'cards/jokers/'..key..'.lua'
+    if file_exists(file_path) then
+        SMODS.load_file(file_path)()
+    end
 end
