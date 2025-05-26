@@ -39,19 +39,16 @@ local joker_list = {
 }
 
 -- load all individual jokers and check if they exist to prevent a nil value error
-function file_exists(file_path)
-    local file = io.open(file_path, "r")  -- Try to open the file in read mode
-    if file then
-        file:close()  -- Close the file if it exists
-        return true
-    else
-        return false  -- Return false if the file does not exist
+function load_jokers()
+    for _, key in ipairs(joker_list) do
+        local file_path = 'cards/jokers/' .. key .. '.lua'
+        local file = io.open(file_path, "r")  -- Try to open the file in read mode
+        if file then
+            file:close()  -- Close the file if it exists
+            SMODS.load_file(file_path)()  -- Load the joker file
+        end
     end
 end
 
-for _, key in ipairs(joker_list) do
-    local file_path = 'cards/jokers/'..key..'.lua'
-    if file_exists(file_path) then
-        SMODS.load_file(file_path)()
-    end
-end
+-- Call the function to load the jokers
+load_jokers()
