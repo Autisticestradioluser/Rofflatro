@@ -38,7 +38,12 @@ local joker_list = {
     'Speculative Oops',
 }
 
--- load all individual jokers
+-- load all individual jokers and check that they load okay
 for _, key in ipairs(joker_list) do
-    SMODS.load_file('cards/jokers/'..key..'.lua')()
+    local success, err = pcall(function()
+        SMODS.load_file('cards/jokers/'..key..'.lua')()
+    end)
+    if not success then
+        print("Error loading file: " .. key .. " - " .. err)
+    end
 end
