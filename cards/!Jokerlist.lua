@@ -44,6 +44,5 @@ for _, key in ipairs(joker_list) do
         SMODS.load_file('cards/jokers/'..key..'.lua')()
     end)
     if not success then
-        print("Error loading file: " .. key .. " - " .. err)
     end
 end
